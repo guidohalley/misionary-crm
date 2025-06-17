@@ -1,0 +1,21 @@
+services:
+  db:
+    image: postgres:15
+    ports:
+      - "5435:5432"
+    env_file: .env
+    volumes:
+      - db_data:/var/lib/postgresql/data
+  web:
+    build:
+      context: ./
+      dockerfile: Dockerfile
+    command: yarn dev
+    ports:
+      - '3001:3000'
+    env_file: .env
+    depends_on:
+      - db
+volumes:
+  db_data:
+
